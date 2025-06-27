@@ -1,0 +1,36 @@
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors(Customizer.withDefaults());
+        http.csrf().disable();
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.exceptionHandling().authenticationEntryPoint(
+                ((request, response, ex) -> {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+                            ex.getMessage());
+                })
+        );
+
+        http.authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/aboutme").permitAll()
+                .antMatchers("/certificados").permitAll()
+                .antMatchers("/educacion").permitAll()
+                .antMatchers("/skill").permitAll()
+                .antMatchers("/persona").permitAll()
+                .antMatchers("/proyectos").permitAll()
+                .antMatchers("/xp").permitAll()
+                .anyRequest().authenticated();
+
+        http.addFilterBefore(jwtfilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+
+
+    //
+
+      @Bean
+        public UserDetailsService userDetailsService() {
+            return username -> userRepo.findByUser(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found."));
+        }
