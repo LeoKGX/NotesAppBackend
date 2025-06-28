@@ -17,7 +17,7 @@ import java.util.Collection;
 public class User implements UserDetails {
     @Getter @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Setter
@@ -26,13 +26,13 @@ public class User implements UserDetails {
     private String username;
 
     @Setter
-    @Column(nullable = false, length = 64, name = "pass")
+    @Column(nullable = false, length = 64, name = "password")
     @Length(min = 8, max = 64)
-    private String pass;
+    private String password;
 
-    public User(String user, String pass){
-        this.username = user;
-        this.pass = pass;
+    public User(String username, String password){
+        this.username = username;
+        this.password = password;
     }
 
     public User() {}
@@ -44,7 +44,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.pass;
+        return this.password;
     }
 
     @Override
@@ -52,23 +52,4 @@ public class User implements UserDetails {
         return this.username;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }

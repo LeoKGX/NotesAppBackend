@@ -6,11 +6,10 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -20,13 +19,19 @@ public class UserController {
     private BCryptPasswordEncoder passwordEncoder;
 
 
-    @PostMapping("/crear/usuario")
-    public ResponseEntity<User> crearUser(@RequestBody @Valid User user){
-        String encodedPass = passwordEncoder.encode(user.getPassword());
-        user.setPass(encodedPass);
-        userRepo.save(user);
-        URI userUri = URI.create(user.getUsername());
-
-        return ResponseEntity.created(userUri).body(user);
+    @PostMapping("/register")
+    public ResponseEntity<?> crearUser(@RequestBody @Valid User user){
+            String encodedPass = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPass);
+            userRepo.save(user);
+            URI userUri = URI.create(user.getUsername());
+            return ResponseEntity.created(userUri).body(user);
     }
+
+    @DeleteMapping("/delete/user")
+    public ResponseEntity<?> deleteUser(@RequestBody @Valid User user){
+        userRepo.delete(user);
+        return ResponseEntity.ok("User deleted");
+    }
+
 }
