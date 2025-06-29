@@ -5,7 +5,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Etapa 2: run
-FROM eclipse-temurin:17-jre-alpine
+FROM amazoncorretto:17-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar /app/NotesApp.jar
 EXPOSE 8080
