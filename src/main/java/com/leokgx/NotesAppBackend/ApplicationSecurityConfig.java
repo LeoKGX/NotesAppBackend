@@ -70,8 +70,8 @@ public class ApplicationSecurityConfig {
                 "Access-Control-Request-Method", "Access-Control-Request-Headers", "Authorization"
         ));
         cc.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
-        cc.setAllowedOrigins(Arrays.asList("https://intidn-f38c0.web.app"));
-        cc.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "PUT", "PATCH"));
+        cc.setAllowedOrigins(Arrays.asList("https://intidn-f38c0.web.app","http://localhost:4200"));
+        cc.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"));
         cc.setAllowCredentials(Boolean.TRUE);
         cc.setMaxAge(Duration.ZERO);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
