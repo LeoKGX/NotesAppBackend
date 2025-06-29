@@ -17,7 +17,7 @@ import java.util.Collection;
 public class User implements UserDetails {
     @Getter @Setter
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
