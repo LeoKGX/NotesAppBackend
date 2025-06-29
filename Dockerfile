@@ -5,7 +5,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Etapa 2: run
-FROM amazoncorretto:17-alpine
+FROM amazoncorretto:17
 WORKDIR /app
 COPY --from=build /app/target/*.jar /app/NotesApp.jar
 EXPOSE 8080
